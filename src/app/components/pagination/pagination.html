@@ -1,35 +1,52 @@
-<div class="flex items-center justify-around">
-<nav aria-label="Page navigation example" class="flex gap-10 items-center space-x-4">
-    <div>
-        <span>{{currentPage()}} of {{totalPages()||1}}Pages</span>
-        <span>({{totalRecords()||0}} Items)</span>
+<div class="w-full overflow-x-auto py-3 px-2">
+  <nav aria-label="Page navigation example" class="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+    
+    <!-- 1. عرض معلومات الصفحات -->
+    <div class="text-xs sm:text-sm text-gray-600 whitespace-nowrap">
+        <span class="font-medium">{{currentPage()}}</span> of <span class="font-medium">{{totalPages()||1}}</span> Pages 
+        <span class="text-gray-400">({{totalRecords()||0}} Items)</span>
     </div>
-  <ul class="flex space-x-3 text-sm">
-    <li>
-      <button [disabled]="currentPage()===1" (click)="onchangepage(currentPage()-1)" class="flex items-center cursor-pointer rounded-2xl justify-center text-body bg-neutral-secondary-medium border border-default-medium hover:bg-blue-300 hover:text-heading shadow-xs font-medium leading-5 rounded-s-base text-sm px-3 h-9 focus:outline-none"> <i class="fa-solid fa-circle-arrow-left mt-1"></i> Previous</button>
-    </li>
-    <li>
-      <button [disabled]="currentPage()==1" (click)="onchangepage(currentPage()-1)" class="flex items-center cursor-pointer justify-center text-body bg-neutral-secondary-medium border border-default-medium hover:bg-blue-300 rounded-2xl hover:text-heading shadow-xs font-medium leading-5 text-sm w-9 h-9 focus:outline-none">1</button>
-    </li>
-    <li>
-      <button [disabled]="currentPage()===totalPages()" (click)="onchangepage(currentPage()+1)" class="flex cursor-pointer items-center justify-center text-body bg-neutral-secondary-medium border border-default-medium hover:bg-blue-300 rounded-2xl hover:text-heading shadow-xs font-medium leading-5 text-sm w-9 h-9 focus:outline-none">2</button>
-    </li>
-    <li>
-        <button [disabled]="currentPage()===totalPages()" (click)="onchangepage(currentPage()+1)" class="flex items-center cursor-pointer justify-center text-body bg-neutral-secondary-medium  hover:bg-blue-300 rounded-2xl hover:text-heading border-1 border-black shadow-xs font-medium leading-5 rounded-e-base text-sm px-3 h-9 focus:outline-none">Next<i class="fa-solid fa-circle-arrow-right mt-1"></i></button>
-    </li>
-  </ul>
-  <form class="mx-auto mt-1">
-    <label for="countries" class="sr-only">Select an option</label>
-    <div class="flex items-center gap-2 whitespace-nowrap  ">
-      <select id="countries" [(ngModel)]="pageSize" name="pageSize" class="block rounded-xl w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm leading-4 rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
-      <option [ngValue]="10">10</option>
-      <option [ngValue]="25">25</option>
-      <option [ngValue]="50">50</option>
-      <option [ngValue]="100">100</option>
-    </select>
-      <h5 class="font-bold ">Items Page</h5>
-    </div>
-  </form>
-</nav>
-</div>
 
+    <!-- 2. أزرار التنقل (Previous, Numbers, Next) -->
+    <ul class="flex flex-wrap justify-center items-center gap-2 text-sm">
+      <!-- زر السابق -->
+      <li>
+        <button [disabled]="currentPage()===1" (click)="onchangepage(currentPage()-1)" class="flex items-center cursor-pointer rounded-2xl justify-center text-body bg-neutral-secondary-medium border border-default-medium hover:bg-blue-300 hover:text-heading shadow-xs font-medium leading-5 text-sm px-3 h-9 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"> 
+          <i class="fa-solid fa-circle-arrow-left mt-1 ltr:mr-1 rtl:ml-1"></i> Previous
+        </button>
+      </li>
+
+      <!-- زر رقم 1 -->
+      <li>
+        <button [disabled]="currentPage()===1" (click)="onchangepage(1)" class="flex items-center cursor-pointer justify-center text-body bg-neutral-secondary-medium border border-default-medium hover:bg-blue-300 rounded-2xl hover:text-heading shadow-xs font-medium leading-5 text-sm w-9 h-9 focus:outline-none disabled:opacity-50">1</button>
+      </li>
+
+      <!-- زر رقم 2 -->
+      <li>
+        <button [disabled]="currentPage()===totalPages()" (click)="onchangepage(2)" class="flex cursor-pointer items-center justify-center text-body bg-neutral-secondary-medium border border-default-medium hover:bg-blue-300 rounded-2xl hover:text-heading shadow-xs font-medium leading-5 text-sm w-9 h-9 focus:outline-none disabled:opacity-50">2</button>
+      </li>
+
+      <!-- زر التالي -->
+      <li>
+        <button [disabled]="currentPage()===totalPages()" (click)="onchangepage(currentPage()+1)" class="flex items-center cursor-pointer justify-center text-body bg-neutral-secondary-medium hover:bg-blue-300 rounded-2xl hover:text-heading border border-black shadow-xs font-medium leading-5 text-sm px-3 h-9 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed">
+          Next <i class="fa-solid fa-circle-arrow-right mt-1 ltr:ml-1 rtl:mr-1"></i>
+        </button>
+      </li>
+    </ul>
+
+    <!-- 3. قائمة اختيار عدد العناصر في الصفحة (Page Size) -->
+    <form class="mt-1">
+      <label for="countries" class="sr-only">Select an option</label>
+      <div class="flex items-center gap-2 whitespace-nowrap">
+        <select id="countries" [(ngModel)]="pageSize" name="pageSize" class="block rounded-xl px-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm leading-4 focus:ring-brand focus:border-brand shadow-xs">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="25">25</option>
+          <option [ngValue]="50">50</option>
+          <option [ngValue]="100">100</option>
+        </select>
+        <h5 class="font-bold text-sm">Items Page</h5>
+      </div>
+    </form>
+
+  </nav>
+</div>

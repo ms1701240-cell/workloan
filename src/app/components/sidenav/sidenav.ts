@@ -16,7 +16,7 @@ export class Sidenav {
     BookOpen,
     TicketPercent
   } 
-  isexpanded=signal<boolean>(true)
+  isexpanded=signal<boolean>(false)
     tooglesidebar(){
       this.isexpanded.update(exp=>!exp);
     }

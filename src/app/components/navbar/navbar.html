@@ -1,31 +1,74 @@
-<div class="py-2">
-    <nav class="flex mx-auto w-[calc(100%-1rem)]  rounded-2xl flex-row justify-between items-center bg-gray-800 text-white p-4">
-        <div class="  flex space-x-4 text-lg font-bold">
-            <h1 class="mt-1">Octa</h1>
-            <app-search-bar class="bg-white rounded-2xl " [show]="'navbar'"> </app-search-bar>
-        </div>
-    <ul class="flex space-x-4 items-center">
-    <!-- الأيقونات -->
-    <li><a href="/"><i class="fa-regular fa-envelope fa-xl"></i></a></li>
-    <li><a><lucide-icon [name]="icons.MessageSquareMore"></lucide-icon></a></li>
-    <li><a><i class="fa-regular fa-paper-plane fa-xl"></i></a></li>
-    <li><a><i class="fa-regular fa-bell fa-xl"></i></a></li>
-    <li><a href="/loan"><i class="fa-solid fa-clipboard-list fa-xl"></i></a></li>
+<div class="py-2 px-3 md:px-10 w-full">
+  <nav class="flex w-full rounded-2xl flex-wrap md:flex-nowrap justify-between items-center bg-gray-800 text-white p-4 relative">
     
-    <!-- اللغة -->
-    <div class="flex items-center gap-2 cursor-pointer" (click)="toogleLang()">
+    <!-- اللوجو والبحث -->
+    <div class="flex items-center space-x-2 sm:space-x-4 text-lg font-bold">
+      <h1 class="mt-1 font-bold">Octa</h1>
+      <app-search-bar class="bg-white rounded-2xl" [show]="'navbar'"></app-search-bar>
+    </div>
+
+    <!-- زرار الـ Hamburger -->
+    <button (click)="toggleMenu()" class="md:hidden text-white focus:outline-none p-2">
+      <i class="fa-solid text-xl" [class.fa-bars]="!ismenuopen()" [class.fa-xmark]="ismenuopen()"></i>
+    </button>
+
+    <!-- عناصر الـ Desktop -->
+    <ul class="md:flex hidden space-x-4 rtl:space-x-reverse items-center">
+      <!-- الأيقونات -->
+      <li><a href="/"><i class="fa-regular fa-envelope fa-xl"></i></a></li>
+      <li><a><lucide-icon [name]="icons.MessageSquareMore"></lucide-icon></a></li>
+      <li><a><i class="fa-regular fa-paper-plane fa-xl"></i></a></li>
+      <li><a><i class="fa-regular fa-bell fa-xl"></i></a></li>
+      <li><a href="/loan"><i class="fa-solid fa-clipboard-list fa-xl"></i></a></li>
+      
+      <!-- اللغة -->
+      <div class="flex items-center gap-2 cursor-pointer" (click)="toogleLang()">
         <li><a><i class="fa-solid fa-globe fa-xl"></i></a></li>
         <li><a><h2 class="font-bold flex items-center gap-1">{{translate.currentLang()==='en'?'English':'العربيه'}} <i class="fa-solid fa-caret-down fa-xl"></i></h2></a></li>
-    </div>
-       
-    <!-- البروفايل والنصوص -->
-    <div class="flex items-center gap-2">
+      </div>
+          
+      <!-- البروفايل والنصوص -->
+      <div class="flex items-center gap-2">
         <li><a><i class="fa-solid fa-circle-user" style="font-size: 40px;"></i></a></li>
         <div class="flex flex-col font-bold leading-tight">
-            <span class="text-sm">Admin</span>
-            <span class="text-sm text-gray-400">Employee</span>
+          <span class="text-sm">Admin</span>
+          <span class="text-sm text-gray-400">Employee</span>
         </div>
-    </div>
-</ul>
-</nav>
-</div>
+      </div>
+    </ul>
+
+    <!-- قائمة الموبايل عند ضغط الـ Hamburger -->
+    @if (ismenuopen()) {
+      <div class="w-full md:hidden mt-4 pt-4 border-t border-gray-700 flex flex-col gap-4">
+        
+        <!-- الأيقونات في الموبايل -->
+        <ul class="flex justify-around items-center bg-gray-900 p-3 rounded-xl">
+          <li><a href="/"><i class="fa-regular fa-envelope fa-lg"></i></a></li>
+          <li><a><lucide-icon [name]="icons.MessageSquareMore"></lucide-icon></a></li>
+          <li><a><i class="fa-regular fa-paper-plane fa-lg"></i></a></li>
+          <li><a><i class="fa-regular fa-bell fa-lg"></i></a></li>
+          <li><a href="/loan"><i class="fa-solid fa-clipboard-list fa-lg"></i></a></li>
+        </ul>
+
+        <!-- البروفايل واللغة في الموبايل -->
+        <div class="flex justify-between items-center px-2">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-circle-user text-3xl"></i>
+            <div class="flex flex-col font-bold leading-tight">
+              <span class="text-sm">Admin</span>
+              <span class="text-xs text-gray-400">Employee</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 cursor-pointer bg-gray-700 px-3 py-1.5 rounded-lg" (click)="toogleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span class="text-xs font-bold">
+              {{translate.currentLang()==='en'?'English':'العربيه'}}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    }
+
+  </nav>

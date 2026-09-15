@@ -1,7 +1,9 @@
 <div
-  [class.w-20]="!isexpanded()"
-  [class.w-[300px]]="isexpanded()"
-  class="flex w-[calc(100%-0.5rem)] mx-auto h-full flex-col justify-between border-e border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-800 rounded-2xl shadow-lg transition-all duration-300 overflow-hidden"
+  [ngClass]="{
+    'w-14 md:w-20': !isexpanded(),
+    'w-[200px] md:w-[260px]': isexpanded()
+  }"
+  class="flex md:mt-0 mt-26 md:w-[calc(100%-0.9rem)]  mx-auto  flex-col justify-between border-e border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-800 rounded-2xl shadow-lg transition-all duration-300 overflow-hidden"
 >
   <div class="p-5 w-full">
 
@@ -11,7 +13,7 @@
         {{ isexpanded() ? '<' : '>' }}
       </span>
       @if (isexpanded()) {
-        <h1 class="text-[13px] uppercase font-bold text-gray-900 dark:text-gray-500 truncate">
+        <h1 class="md:text-[13px]  uppercase font-bold text-gray-900 dark:text-gray-500 truncate">
           LOOKScout DASHBOARD
         </h1>
       }

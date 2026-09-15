@@ -13,6 +13,10 @@ export class Navbar {
     MessageSquareMore
   }
   translate=inject(TranslateService);
+  ismenuopen=signal<boolean>(false);
+  toggleMenu(){
+    this.ismenuopen.update(open=>!open);
+  }
   toogleLang(){
     const currentLang = this.translate.currentLang() || 'en';
     
@@ -20,6 +24,7 @@ export class Navbar {
     const newLang = currentLang === 'en' ? 'ar' : 'en';
     this.translate.use(newLang);
     document.dir=newLang==='ar'?'rtl':'ltr'
+     
 
 
   }
