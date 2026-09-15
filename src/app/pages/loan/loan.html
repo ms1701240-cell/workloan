@@ -1,0 +1,232 @@
+
+<div class="">
+    <div class="flex justify-between items-center">
+        <h1 class="primaryTxt font-semibold text-2xl leading-9"> {{ 'Loans' | translate }}</h1>
+        <div class="flex justify-between items-center">
+            <app-search-bar [KeysArray]="keysArray()" [(value)]="value" (searchEvent)="OnChangeEvent($event)" [show]="'table'" [(isexpanded)]="isexpanded" ></app-search-bar>
+            <button (click)="create()"
+                class="rounded-lg secondaryBorder secondaryTxt px-4 py-3 flex items-center justify-center gap-2">
+                {{ 'Create' | translate }} {{ 'Loans' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <div class="mt-5 overflow-x-auto rounded-2xl border border-[#BDBDBD]">
+            <table class="w-full tabe inset-0 bg-[#EBEBEB] text-left rtl:text-right text-[#6F6F6F]">
+                <thead class="bg-[#EBEBEB] text-sm md:text-base border border-[#BDBDBD] border-t-0 border-l-0">
+                    <tr>
+                        <th
+                            class="py-3 px-4 min-w-[120px] whitespace-nowrap border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ 'ID' | translate }}
+                        </th>
+                        <th
+                            class="py-3 px-4 min-w-[120px] whitespace-nowrap border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ 'Date' | translate }}
+                        </th>
+                        <th
+                            class="py-3 px-4 min-w-[120px] whitespace-nowrap border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ 'Employee' | translate }}
+                        </th>                        
+                        <th
+                            class="py-3 px-4 min-w-[120px] whitespace-nowrap border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ 'Treasury' | translate }}
+                        </th>
+                        <th
+                            class="py-3 px-4 min-w-[120px] whitespace-nowrap border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ 'Amount' | translate }}
+                        </th>
+                        <th
+                            class="py-3 px-4 min-w-[120px] whitespace-nowrap border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ 'Actions' | translate }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- No Data Row -->
+                    <tr *ngIf="paginatedData().length === 0">
+                        <td colspan="6"
+                            class="bg-white px-4 py-2 h-[72px] text-center border-t border-gray-300 text-xs md:text-sm">
+                            {{ 'No Data Found' | translate }}
+                        </td>
+                    </tr>
+
+                    <!-- Data Rows -->
+                    <tr *ngFor="let row of paginatedData(); let i = index"
+                        [ngClass]="{ 'bg-[#F7F7F7]': i % 2 === 1, 'bg-white': i % 2 !== 1 }"
+                        class="border-t border-gray-300 text-xs md:text-sm">
+                        <td class="py-5 px-4 border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ row.id }}
+                        </td>
+                        <td class="py-5 px-4 border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ row.date }}
+                        </td>
+                        <td class="py-5 px-4 border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ row.employeeEnName}}
+                        </td>
+                        <td class="py-5 px-4 border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ row.treasuryName }}
+                        </td>
+                        <td class="py-5 px-4 border border-[#EAECF0] border-t-0 border-l-0">
+                            {{ row.amount }}
+                        </td>
+                        <td class="py-5 px-4 border border-[#EAECF0] border-t-0 border-l-0">
+                            <div class="flex space-x-4 rtl:space-x-reverse">
+                                <button (click)="delete(row.id)">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                                <button (click)="edit(row)">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="default-modal" tabindex="-1" aria-hidden="true" [ngClass]="{ hidden: !isModalVisible() }"
+    class="fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-full bg-black/50">
+    <div class="bg-white rounded-2xl p-12 w-1/2 max-h-[95%] overflow-y-auto">
+        <form #loanForm="ngForm">
+        <div class="flex justify-between items-center">
+            <h1 *ngIf="mode() == 'add'" class="font-semibold text-2xl leading-9"> {{ 'create' | translate }} {{ 'Loans' | translate }}</h1>
+            <h1 *ngIf="mode() == 'edit'" class="font-semibold text-2xl leading-9"> {{ 'edit' | translate }} {{ 'Loans' | translate }}</h1>
+            <button (click)="isModalVisible.set(false)" type="button"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-3 rounded-lg">X</button>
+        </div>
+
+        <div class="mt-6 mb-4 rounded-3xl flex justify-between flex-wrap">
+
+            <!-- Employee -->
+            <div class="flex flex-col mb-4 w-full">
+                <label class="mb-2 primaryTxt" for="employeeID">{{ 'Employee' | translate }}</label>
+                <select class="rounded-lg border border-solid border-gray-300 px-4 py-3 overflow-y-auto" id="employeeID"
+                    name="employeeID"
+                    [(ngModel)]="loan().employeeID"
+                    (ngModelChange)="onInputValueChange('employeeID', $event);">
+                    <option [value]="0" disabled selected hidden> {{ 'Choose' | translate }} {{ 'Employee' | translate }} </option>
+                    <option *ngFor="let emp of employees()" [value]="emp.id">{{ isRtl() ? emp.en_name : emp.ar_name }}</option>
+                    <option *ngIf="employees().length === 0" disabled selected> {{ 'No Data Found' | translate }} </option>
+                </select>
+                <span *ngIf="validationerrors('employeeID', 'This field is required.')"
+                    class="text-red-500 ml-3 font-normal">{{ 'This field is required' | translate }}</span>
+            </div>
+
+            <!-- Date -->
+            <div class="flex flex-col mb-4 w-full">
+                <label class="mb-2 primaryTxt" for="date"> {{ 'Date' | translate }}</label>
+                <input id="date" type="date" class="rounded-lg border border-solid border-gray-300 px-4 py-3" 
+                    name="date"
+                    [dir]="!isRtl() ? 'rtl' : 'ltr'"
+                    placeholder="{{ 'Enter Date' | translate }}" [(ngModel)]="loan().date"
+                    (ngModelChange)="onInputValueChange('date', $event)" />
+                <span *ngIf="validationerrors('date', 'This field is required.')"
+                    class="text-red-500 ml-3 font-normal">{{ 'This field is required' | translate }}</span>
+            </div>
+
+            <!-- Treasury -->
+            <div class="flex flex-col mb-4 w-[49%]">
+                <label class="mb-2" for="treasuryID">{{ 'Treasury' | translate }}</label>
+                <select class="rounded-lg border border-solid border-gray-300 px-4 py-3 overflow-y-auto" id="treasuryID"
+                    name="treasuryID"
+                    [(ngModel)]="loan().treasuryID" (ngModelChange)="onInputValueChange('treasuryID', $event)">
+                    <option [value]="0" disabled selected hidden> {{ 'Choose' | translate }} {{ 'Treasury' | translate }} </option>
+                    <option *ngFor="let treasury of treasuries()" [value]="treasury.id">{{ treasury.name }}</option>
+                    <option *ngIf="treasuries().length === 0" disabled selected> {{ 'No Data Found' | translate }} </option>
+                </select>
+                <span *ngIf="validationerrors('treasuryID', 'This field is required.')"
+                    class="text-red-500 ml-3 font-normal">{{ 'This field is required' | translate }}</span>
+            </div>
+
+            <!-- Amount -->
+            <div class="flex flex-col mb-4 w-[49%]">
+                <label class="mb-2 primaryTxt" for="amount"> {{ 'Amount' | translate }}</label>
+                <input id="amount" type="text" class="rounded-lg border border-solid border-gray-300 px-4 py-3"
+                    name="amount"
+                    placeholder="{{ 'Enter Amount' | translate }}" [(ngModel)]="loan().amount"
+                    (ngModelChange)="onInputValueChange('amount', $event)" />
+                <span *ngIf="validationerrors('amount', 'This field is required.')"
+                    class="text-red-500 ml-3 font-normal">{{ 'This field is required' | translate }}</span>
+            </div>
+
+            <!-- Deduction Start Month -->
+            <div class="flex flex-col mb-4 w-[49%]">
+                <label for="deductionStartMonth" class="mb-2 primaryTxt"> 
+                    {{ 'Deduction Start Month' | translate }}
+                </label>
+                <input id="deductionStartMonth" 
+                    type="month" 
+                    name="StartMonth"
+                    pattern="[0-9]{4}-[0-9]{2}"
+                    maxlength="7"
+                    placeholder="{{ 'YYYY-MM' | translate }}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 w-full"
+                    [dir]="!isRtl() ? 'rtl' : 'ltr'"
+                    [(ngModel)]="loan().StartMonth"
+                    (keypress)="onKeyPress($event)"
+                    (change)="onMonthChange()" />
+                <span *ngIf="validationerrors('StartMonth', 'This field is required.')"
+                    class="text-red-500 ml-3 font-normal">
+                    {{ 'This field is required' | translate }}
+                </span>
+            </div>
+
+            <!-- Deduction End Month -->
+            <div class="flex flex-col mb-4 w-[49%]">
+                <label for="deductionEndMonth" class="mb-2 primaryTxt"> {{ 'Deduction End Month' | translate }}
+                </label>
+                <input id="deductionEndMonth" type="month"
+                    name="displayEndMonth"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 w-full" readonly 
+                    [dir]="!isRtl() ? 'rtl' : 'ltr'"
+                    placeholder="{{ 'YYYY-MM' | translate }}" [(ngModel)]="displayEndMonth" />
+                <span *ngIf="validationerrors('numberOfDeduction', 'This field is required.')"
+                    class="text-red-500 ml-3 font-normal">{{ 'This field is required' | translate }}</span>
+            </div>
+
+            <!-- Number Of Deduction -->
+            <div class="flex flex-col mb-4 w-[49%]">
+                <label class="mb-2 primaryTxt" for="numberOfDeduction"> {{ 'Number Of Deduction' | translate }}</label>
+                <input id="numberOfDeduction" type="number"
+                    name="numberOfDeduction"
+                    class="rounded-lg border border-solid border-gray-300 px-4 py-3"
+                    [(ngModel)]="loan().numberOfDeduction" (input)="validationerrors('numberOfDeduction', 'This field is required.')"
+                    (ngModelChange)="onInputValueChange('numberOfDeduction', $event); onNumberOfDeductionChange()" min="1"
+                    step="1" />
+                <span *ngIf="validationerrors('numberOfDeduction', 'This field is required.')"
+                    class="text-red-500 ml-3 font-normal">{{ 'This field is required' | translate }}</span>
+            </div>
+
+            <!-- Notes -->
+            <div class="flex flex-col mb-4 w-full">
+                <label class="mb-2 primaryTxt" for="notes"> {{ 'Notes' | translate }}</label>
+                <textarea id="notes" name="notes" class="w-full rounded-lg border border-solid border-gray-300 px-4 py-3"
+                    placeholder="{{ 'Add Notes' | translate }}" [(ngModel)]="loan().notes">
+                </textarea>
+            </div>
+
+        </div>
+
+        <div class="flex justify-end">
+            <button [disabled]="isLoading()" class="secondaryBg text-white font-medium px-4 py-2 rounded-lg"
+                (click)="CreateOREdit()">
+                <span *ngIf="!isLoading()">{{ 'Save' | translate }}</span>
+                <i *ngIf="isLoading()" class="fas fa-spinner fa-spin"></i>
+            </button>
+        </div>
+        </form>
+    </div>
+</div>
+ 
+<app-pagination
+    [currentPage]="CurrentPage()"
+    [totalPages]="TotalPages()"
+    [totalRecords]="TotalRecords()"
+    [(pageSize)]="PageSize"
+    (pageChange)="onPageChange($event)">
+</app-pagination>

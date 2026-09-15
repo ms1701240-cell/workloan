@@ -1,0 +1,31 @@
+<div class="py-2">
+    <nav class="flex mx-auto w-[calc(100%-1rem)]  rounded-2xl flex-row justify-between items-center bg-gray-800 text-white p-4">
+        <div class="  flex space-x-4 text-lg font-bold">
+            <h1 class="mt-1">Octa</h1>
+            <app-search-bar class="bg-white rounded-2xl " [show]="'navbar'"> </app-search-bar>
+        </div>
+    <ul class="flex space-x-4 items-center">
+    <!-- الأيقونات -->
+    <li><a href="/"><i class="fa-regular fa-envelope fa-xl"></i></a></li>
+    <li><a><lucide-icon [name]="icons.MessageSquareMore"></lucide-icon></a></li>
+    <li><a><i class="fa-regular fa-paper-plane fa-xl"></i></a></li>
+    <li><a><i class="fa-regular fa-bell fa-xl"></i></a></li>
+    <li><a href="/loan"><i class="fa-solid fa-clipboard-list fa-xl"></i></a></li>
+    
+    <!-- اللغة -->
+    <div class="flex items-center gap-2 cursor-pointer" (click)="toogleLang()">
+        <li><a><i class="fa-solid fa-globe fa-xl"></i></a></li>
+        <li><a><h2 class="font-bold flex items-center gap-1">{{translate.currentLang()==='en'?'English':'العربيه'}} <i class="fa-solid fa-caret-down fa-xl"></i></h2></a></li>
+    </div>
+       
+    <!-- البروفايل والنصوص -->
+    <div class="flex items-center gap-2">
+        <li><a><i class="fa-solid fa-circle-user" style="font-size: 40px;"></i></a></li>
+        <div class="flex flex-col font-bold leading-tight">
+            <span class="text-sm">Admin</span>
+            <span class="text-sm text-gray-400">Employee</span>
+        </div>
+    </div>
+</ul>
+</nav>
+</div>

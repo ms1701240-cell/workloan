@@ -1,0 +1,216 @@
+<div
+  [class.w-20]="!isexpanded()"
+  [class.w-[300px]]="isexpanded()"
+  class="flex w-[calc(100%-0.5rem)] mx-auto h-full flex-col justify-between border-e border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-800 rounded-2xl shadow-lg transition-all duration-300 overflow-hidden"
+>
+  <div class="p-5 w-full">
+
+    <!-- زر السهم للتحكم -->
+    <button (click)="tooglesidebar()" class="cursor-pointer flex items-center gap-2 w-full text-left focus:outline-none mb-4">
+      <span class="text-lg font-bold text-gray-900 dark:text-gray-500">
+        {{ isexpanded() ? '<' : '>' }}
+      </span>
+      @if (isexpanded()) {
+        <h1 class="text-[13px] uppercase font-bold text-gray-900 dark:text-gray-500 truncate">
+          LOOKScout DASHBOARD
+        </h1>
+      }
+    </button>
+
+    <!-- ========================================== -->
+    <!-- 1. التصميم الموسع (Expanded Mode) -->
+    <!-- ========================================== -->
+    @if (isexpanded()) {
+      <div>
+        <h1 class="uppercase mt-2 mb-4 text-lg font-semibold text-gray-900 dark:text-white">Main Menu</h1>
+      </div>
+
+      <ul class="space-y-1">
+        <!-- Dashboard -->
+        <li>
+          <a href="#" class="flex items-center gap-3 rounded-lg bg-gray-50 px-4 py-2 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-500 text-[17px]">
+            <lucide-icon [name]="icons.PanelsRightBottom"></lucide-icon>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <!-- Administration -->
+        <li>
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 cursor-pointer">
+              <div class="flex items-center gap-3 text-[16px]">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Administration</span>
+              </div>
+              <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </summary>
+            <ul class="mt-2 space-y-1 px-4">
+              <li><a href="#" class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Calendar</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <!-- LMS -->
+        <li>
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 cursor-pointer">
+              <div class="flex items-center gap-3 text-[16px]">  
+                <lucide-icon [name]="icons.BookOpen"></lucide-icon>
+                <span>LMS</span>
+              </div>
+              <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </summary>
+            <ul class="mt-2 space-y-1 px-4">
+              <li><a href="#" class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Calendar</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <!-- Archiving -->
+        <li>
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 cursor-pointer">
+              <div class="flex items-center gap-3 text-[16px]">
+                <lucide-icon [name]="icons.FolderDown"></lucide-icon>
+                <span>Archiving</span>
+              </div>
+              <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </summary>
+            <ul class="mt-2 space-y-1 px-4">
+              <li><a href="#" class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Calendar</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <!-- HR -->
+        <li>
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 cursor-pointer">
+              <div class="flex items-center gap-3 text-[16px]">
+                <i class="fa-solid fa-user-tie"></i>
+                <span>HR</span>
+              </div>
+              <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </summary>
+            <ul class="mt-2 space-y-1 px-4">
+              <li><a href="#" class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Calendar</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <!-- Violation -->
+        <li>
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 cursor-pointer">
+              <div class="flex items-center gap-3 text-[16px]">
+                <lucide-icon [name]="icons.TicketPercent"></lucide-icon>
+                <span>Violation</span>
+              </div>
+              <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </summary>
+            <ul class="mt-2 space-y-1 px-4">
+              <li><a href="#" class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Calendar</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <!-- Registration -->
+        <li>
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 cursor-pointer">
+              <div class="flex items-center gap-3 text-[16px]">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Registration</span>
+              </div>
+              <span class="shrink-0 transition duration-300 group-open:-rotate-180">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </summary>
+            <ul class="mt-2 space-y-1 px-4">
+              <li><a href="#" class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Calendar</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+
+    } @else {
+
+      <!-- ========================================== -->
+      <!-- 2. التصميم المصغر (Collapsed Mode - أيقونات فقط) -->
+      <!-- ========================================== -->
+      <ul class="space-y-3 mt-4 flex flex-col items-center">
+        <!-- Dashboard -->
+        <li>
+          <a href="#" title="Dashboard" class="flex justify-center items-center rounded-lg bg-gray-50 p-2 text-gray-900 dark:bg-gray-800 dark:text-gray-500 text-[18px]">
+            <lucide-icon [name]="icons.PanelsRightBottom"></lucide-icon>
+          </a>
+        </li>
+
+        <!-- Administration -->
+        <li>
+          <a href="#" title="Administration" class="flex justify-center items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 text-[18px]">
+            <i class="fa-solid fa-user-gear"></i>
+          </a>
+        </li>
+
+        <!-- LMS -->
+        <li>
+          <a href="#" title="LMS" class="flex justify-center items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 text-[18px]">
+            <lucide-icon [name]="icons.BookOpen"></lucide-icon>
+          </a>
+        </li>
+
+        <!-- Archiving -->
+        <li>
+          <a href="#" title="Archiving" class="flex justify-center items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 text-[18px]">
+            <lucide-icon [name]="icons.FolderDown"></lucide-icon>
+          </a>
+        </li>
+
+        <!-- HR -->
+        <li>
+          <a href="#" title="HR" class="flex justify-center items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 text-[18px]">
+            <i class="fa-solid fa-user-tie"></i>
+          </a>
+        </li>
+
+        <!-- Violation -->
+        <li>
+          <a href="#" title="Violation" class="flex justify-center items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 text-[18px]">
+            <lucide-icon [name]="icons.TicketPercent"></lucide-icon>
+          </a>
+        </li>
+
+        <!-- Registration -->
+        <li>
+          <a href="#" title="Registration" class="flex justify-center items-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-600 dark:hover:bg-gray-800 text-[18px]">
+            <i class="fa-solid fa-right-to-bracket"></i>
+          </a>
+        </li>
+      </ul>
+    }
+
+  </div>
+</div>
